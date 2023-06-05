@@ -1,0 +1,64 @@
+name: "Update NPM packages"
+author: "@msudgh"
+description: "Create a PR that updates NPM packages to latest possible versions"
+branding:
+  icon: download
+  color: green
+inputs:
+  node-version:
+    description: "Node.js version for the updater"
+    required: false
+    default: "18.16.0"
+  npm-version:
+    description: "NPM version for the updater"
+    required: false
+    default: "1.2.2"
+  base-branch:
+    description: "Git branch name as the base"
+    required: false
+    default: "main"
+  pr-body:
+    description: "The body of the pull request"
+    required: false
+    default: "Automated changes by [actions-npm-check-updates](https://github.com/msudgh/actions-npm-check-updates) GitHub action"
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/checkout@v3
+      with:
+        ref: ${{ inputs.base-branch }}
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ inputs.node-version }}
+    - name: Install dependencies
+      run: npm install npm-check-updates -g
+      shell: bash
+    - name: Update packages
+      run: |
+        ncu -u --jsonUpgraded
+        git status --porcelain
+        echo "{changed}={$(git status --porcelain | wc -l | xargs)}"
+      shell: bash
+    - name: Check if there are changes
+      id: changes
+      run: echo "changed=$(git status --porcelain | wc -l | xargs)" >> "$GITHUB_OUTPUT"
+      shell: bash
+    - name: Create a PR with the updates
+      if: steps.changes.outputs.changed > 0
+      id: cpr
+      uses: peter-evans/create-pull-request@v5
+      with:
+        commit-message: Update NPM packages
+        branch: automated/update-packages
+        branch-suffix: timestamp
+        delete-branch: true
+        title: Update NPM packages
+        body: ${{ inputs.pr-body }}
+        base: ${{ inputs.base-branch }}
+    - name: Check outputs
+      if: ${{ steps.cpr.outputs.pull-request-number }}
+      run: |
+        echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+        echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      shell: bash
