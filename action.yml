@@ -37,6 +37,7 @@ runs:
     - name: Update packages
       run: |
         ncu -u --jsonUpgraded
+        npm ci
         git status --porcelain
         echo "{changed}={$(git status --porcelain | wc -l | xargs)}"
       shell: bash
