@@ -1,2 +1,2 @@
 # actions-npm-check-updates
-GitHub Action for updating NPM packages
+Create pull requests for the latest version of NPM packages

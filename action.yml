@@ -1,6 +1,6 @@
 name: "Update NPM packages"
 author: "@msudgh"
-description: "Create a PR that updates NPM packages to latest possible versions"
+description: "Create pull requests for the latest version of NPM packages"
 branding:
   icon: download
   color: green
