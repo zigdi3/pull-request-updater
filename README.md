@@ -26,7 +26,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update packages
-        uses: msudgh/actions-npm-check-updates@v0.1.1
+        uses: msudgh/actions-npm-check-updates@v0.1.2
 ```
 
 ## Inputs
@@ -55,7 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Update packages
-        uses: msudgh/actions-npm-check-updates@v0.1.1
+        uses: msudgh/actions-npm-check-updates@v0.1.2
         with:
           node-version: 18.16.0
           npm-version: 1.2.2
