@@ -1,4 +1,4 @@
-name: "Update NPM packages"
+name: "Update NPM packages v2"
 author: "@msudgh"
 description: "Create pull requests for the latest version of NPM packages"
 branding:
