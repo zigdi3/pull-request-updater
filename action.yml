@@ -12,15 +12,15 @@ inputs:
   npm-version:
     description: "NPM version for the updater"
     required: false
-    default: "1.2.2"
+    default: "8.19.4"
   base-branch:
     description: "Git branch name as the base"
     required: false
-    default: "main"
+    default: ${{ github.event.repository.default_branch }}
   pr-body:
     description: "The body of the pull request"
     required: false
-    default: "Automated changes by [actions-npm-check-updates](https://github.com/msudgh/actions-npm-check-updates) GitHub action"
+    default: "Automated update packages for GitHub action"
 runs:
   using: "composite"
   steps:
